@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "start": "node src/server.js",
     "start:dev": "nodemon src/server.js"
   },
@@ -30,6 +30,9 @@
     "express-rescue": "^1.1.31"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "@babel/plugin-transform-modules-commonjs": "^7.18.2",
+    "jest": "^28.1.1",
+    "nodemon": "^2.0.16",
+    "supertest": "^6.2.3"
   }
 }

@@ -3,14 +3,14 @@ import rescue from 'express-rescue';
 
 export default ({ router }) => {
   // with ids
-  router.get('/pets', rescue(async (req, res, next) => {
+  router.get('/petshops', rescue(async (req, res, next) => {
     return res
-      .status()
+      .status(200)
       .json()
   }));
 
   // dinamics
-  router.get('/pets/:id', (async (req, res, next) => {
+  router.get('/petshops/:id', (async (req, res, next) => {
     const id = req.params.id;
     return res
       .status()

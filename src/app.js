@@ -1,23 +1,18 @@
 import express from 'express';
-// import { routes } from './rest/index.js';
-import fs from 'fs';
+import routes from './rest/index.js';
+
 
 export async function createApp(config = {}) {
   const { PORT = 8000 } = config;
   const app = express();
 
-  const addRestRoute = async ({ default: route }) => {
+  const addRestRoute = (route) => {
     const router = express.Router();
-    await route({ config, router, app });
+    route({ config, router, app });
     app.use(router);
   };
 
-  const routes = fs
-    .readdirSync(`./src/rest/`)
-    .filter(file => (file.slice(-3) === '.js'))
-    .map((file) => import(`./rest/${file}`).then(addRestRoute));
-
-  await Promise.all(routes);
-  app.listen(PORT, () => console.log(`Server up in port ${PORT}`));
+  await Promise.all(routes.map(addRestRoute));
+  app.start = () => app.listen(PORT, () => console.log(`Ouvindo na porta ${PORT}`))
   return app;
 }

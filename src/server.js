@@ -1,3 +1,3 @@
 import { createApp } from "./app.js";
 
-await createApp();
+createApp().then((app) => app.start());
