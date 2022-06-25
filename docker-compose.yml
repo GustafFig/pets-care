@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  apiweb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    depends_on:
+      - db
+    volumes:
+      - ./api:/code
+      - ./commons:/code/commons
+    ports:
+      - "80:8000"
+    networks:
+      - petshop-nw
+
+  db:
+    image: "mysql:8.0.29-oracle"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-pets}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-pets}
+    ports:
+      - 3306:3306
+    networks:
+      - petshop-nw
+
+networks:
+  petshop-nw:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.9.${REDE-2}.0/24"
