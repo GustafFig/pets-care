@@ -1,7 +1,7 @@
 import express from 'express';
 import routes from './rest/index.js';
 import * as rawServices from './services/index.js';
-const models = {};
+import models from './models/index.js'
 const middlewares = { auth: (_req, _res, next) => { req.user.petshopId = 1; next() } };
 
 export async function createApp(config = {}) {

@@ -6,11 +6,13 @@ export default class PetshopService {
   }
 
   #validate() {
-    
+
   }
 
   async get() {
-    return this.models.Petshop.findAll();
+    
+    // return this.models.Petshop.findAll();
+    return []
   }
   
   async getById({ id }) {
