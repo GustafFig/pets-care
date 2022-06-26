@@ -14,20 +14,24 @@ export default function createRouter({ router, services, middlewares }) {
     const data = await service.get({ ...req.params, petshopId: req.user.petshopId });
     res.status(200).json(data);
   }));
+
   router.get('/:id', rescue(async (req, res) => {
     const response = await service.get(req.params.id)
       .catch(err => next(err));
     if (response) res.status(200).json(response);
   }));
-  router.post('/:id', rescue(async (req, res) => {
-    const response = await service.post(req.params);
-    if (response) res.status(200).json(response);
+
+  router.post('/', rescue(async (req, res) => {
+    const response = await service.create(req.body);
+    if (response) res.status(201).json({ data: response });
   }));
+
   router.delete('/:id', rescue(async (req, res) => {
     if (!req.params.id) next(Boom.badData(`id required for take ${req.path}`));
     const response = await service.delete(req.params);
     res.status(200).json(response);
   }));
+
   router.put('/:id', rescue(async (req, res) => {
     if (!req.params.id) next(Boom.badData(`id required for take ${req.path}`));
     const response = await service.update(req.params, );

@@ -5,8 +5,8 @@ export default class PetshopService {
     this.config = config;
   }
 
-  #validate() {
-
+  #validate({ name, cnpj }) {
+    // if (!name) throw new Error('name is required')
   }
 
   async get() {
@@ -19,9 +19,9 @@ export default class PetshopService {
     return this.models.Petshop.findByPk({ id });
   }
 
-  async create({ id, name, cnpj }) {
-    this.#validate({ id, name, cnpj })
-    return this.models.Petshop.findByPk({ id, name, cnpj });
+  async create({ name, cnpj }) {
+    this.#validate({ name, cnpj })
+    return this.models.petshops.create({ data: { name, cnpj } });
   }
 
   async delete({ id }) {

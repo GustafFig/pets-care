@@ -2,11 +2,13 @@ import express from 'express';
 import routes from './rest/index.js';
 import * as rawServices from './services/index.js';
 import models from './models/index.js'
-const middlewares = { auth: (_req, _res, next) => { req.user.petshopId = 1; next() } };
+import * as middlewares from './rest/utils.js';
+
 
 export async function createApp(config = {}) {
   const { PORT = 8000 } = config;
   const app = express();
+  app.use(express.json());
 
   const services = Object.freeze(
     Object.entries(rawServices)
@@ -32,6 +34,8 @@ export async function createApp(config = {}) {
   };
 
   await Promise.all(routes.map(addRestRoute));
+
+  app.use(middlewares.error);
   app.start = () => app.listen(PORT, () => console.log(`Ouvindo na porta ${PORT}`))
   return app;
 }
