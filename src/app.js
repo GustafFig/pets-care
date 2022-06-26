@@ -2,7 +2,7 @@ import express from 'express';
 import routes from './rest/index.js';
 import * as rawServices from './services/index.js';
 import models from './models/index.js';
-import * as middlewares from './rest/utils.js';
+import * as middlewares from './middlewares.js';
 
 export async function createApp(config = {}) {
   const { PORT = 8000 } = config;

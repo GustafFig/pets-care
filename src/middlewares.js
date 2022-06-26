@@ -5,7 +5,7 @@ export function error(err, _req, res, _next) {
   if (Boom.isBoom(err)) {
     // eslint-disable-next-line no-console
     console.error(err);
-    res.status(err.code).json(err);
+    res.status(err.output.statusCode).json({ message: err.message });
   } else {
     // eslint-disable-next-line no-console
     console.error(err);
