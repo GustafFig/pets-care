@@ -1,7 +1,6 @@
 import Boom from 'boom';
 import rescue from 'express-rescue';
 
-
 export default function createRouter({ router, services, middlewares }) {
   const service = services.PetshopService;
   const authMidleware = middlewares.auth;
@@ -10,14 +9,14 @@ export default function createRouter({ router, services, middlewares }) {
   if (!authMidleware) throw Error('authMidleware not founded');
 
   router.use(authMidleware);
-  router.get('/',  rescue(async (req, res) => {
+  router.get('/', rescue(async (req, res) => {
     const data = await service.get({ ...req.params, petshopId: req.user.petshopId });
     res.status(200).json(data);
   }));
 
-  router.get('/:id', rescue(async (req, res) => {
+  router.get('/:id', rescue(async (req, res, next) => {
     const response = await service.get(req.params.id)
-      .catch(err => next(err));
+      .catch((err) => next(err));
     if (response) res.status(200).json(response);
   }));
 
@@ -26,15 +25,15 @@ export default function createRouter({ router, services, middlewares }) {
     if (response) res.status(201).json({ data: response });
   }));
 
-  router.delete('/:id', rescue(async (req, res) => {
+  router.delete('/:id', rescue(async (req, res, next) => {
     if (!req.params.id) next(Boom.badData(`id required for take ${req.path}`));
     const response = await service.delete(req.params);
     res.status(200).json(response);
   }));
 
-  router.put('/:id', rescue(async (req, res) => {
+  router.put('/:id', rescue(async (req, res, next) => {
     if (!req.params.id) next(Boom.badData(`id required for take ${req.path}`));
-    const response = await service.update(req.params, );
+    const response = await service.update(req.params);
     res.status(200).json(response);
   }));
   return '/petshops';

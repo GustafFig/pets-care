@@ -1,5 +1,5 @@
-import petshops from "./petshops.js";
+import petshops from './petshops.js';
 
 export default [
   petshops,
-]
+];
